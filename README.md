@@ -1,4 +1,4 @@
-# OemAccessTestServer
+# Oem Access Test Server
 A sample server for testing the OEM Advance Controller
 
 This application is a sample server for the Grosvenor OEM Advance controller to communicate with, full protocol documentation is available from Grosvenor Technology as part of the OEM-Access SDK.
