@@ -125,6 +125,7 @@
     <Compile Include="BuisnessLogic\Device.cs" />
     <Compile Include="BuisnessLogic\Devices.cs" />
     <Compile Include="BuisnessLogic\GlobalRepository.cs" />
+    <Compile Include="BuisnessLogic\NetworkNotificationManager.cs" />
     <Compile Include="BuisnessLogic\OemServerQueue.cs" />
     <Compile Include="BuisnessLogic\PlatformRepository.cs" />
     <Compile Include="ControlApi\GlobalController.cs" />

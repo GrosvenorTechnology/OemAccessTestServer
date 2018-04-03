@@ -9,18 +9,16 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
 {
     public class PlatformRepository
     {
-        private static readonly string Folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "GrosvenorTechnology", "OemServer", "platform");
+        private readonly Dictionary<string, string> _store = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
         public string Load(string serialNumber)
         {
-            return File.ReadAllText(Path.Combine(Folder, $"{serialNumber}.json"));
+            return _store[serialNumber];
         }
 
         public void Save(string serialNumber, string data)
         {
-            Directory.CreateDirectory(Folder);
-            var path = Path.Combine(Folder, $"{serialNumber}.json");
-            File.WriteAllText(path, data);
+            _store[serialNumber] = data;
         }
     }
 }

@@ -17,9 +17,11 @@ namespace Itac.OemAccess.TestingServer.Authentication
     public class HmacAuthenticationOptions : AuthenticationOptions
     {
         public Devices Devices { get; set; }
+        public NetworkNotificationManager NotificationManager { get; set; }
         public HmacAuthenticationOptions(IUnityContainer contianer) : base("Hmac")
         {
             Devices = contianer.Resolve<Devices>();
+            NotificationManager = contianer.Resolve<NetworkNotificationManager>();
         }
     }
     class HmacAuthenticationMiddleware : AuthenticationMiddleware<HmacAuthenticationOptions>
@@ -64,6 +66,10 @@ namespace Itac.OemAccess.TestingServer.Authentication
                         var amxHeaderValue = authHeader.Value.Value.First().Split(' ')[1];
                         //Hmac info -> [0] Device Name | [1] Signature | [2] nonce | [3] Guid
                         var hmacInfo = amxHeaderValue.Split(':');
+
+                        //Submit Network Tracking Event
+                        Options.NotificationManager.SubmitNetworkEvent(Context.Request.Uri.AbsoluteUri,hmacInfo[0]);
+
                         string sharedKey;
                         try
                         {

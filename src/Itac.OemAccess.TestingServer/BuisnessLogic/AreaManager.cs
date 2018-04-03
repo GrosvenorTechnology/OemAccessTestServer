@@ -17,11 +17,6 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
         }
         private static List<string> _allowedUsers = new List<string>();
 
-        public AreaManager()
-        {
-            ReadLists();
-        }
-
         public HttpResponseMessage GetResult(AreaMovement movementRequest)
         {
             if (string.IsNullOrEmpty(movementRequest.Entity) || movementRequest.From.Count != 0 || movementRequest.To.Count != 0)
@@ -42,8 +37,6 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
                 if (!_allowedUsers.Contains(user))
                     _allowedUsers.Add(user);
             }
-            SaveList();
-
         }
 
         public void RemoveAllowedUser(List<string> userList)
@@ -52,44 +45,6 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
             {
                 _allowedUsers.Remove(user);
             }
-            SaveList();
-
         }
-
-        private void SaveList()
-        {
-            try
-            {
-                string path = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "GrosvenorTechnology",
-                    "OemServer", $"UserList.json");
-
-                var content = JsonConvert.SerializeObject(_allowedUsers);
-
-                File.WriteAllText(path, content);
-            }
-            catch (Exception)
-            {
-                Log.Error($"Failed to save Data :: UserList.json");
-            }
-            
-        }
-
-        private void ReadLists()
-        {
-            try
-            {
-                string path = Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "GrosvenorTechnology",
-                    "OemServer", "UserList.json");
-                var content = File.ReadAllText(path);
-                _allowedUsers = JsonConvert.DeserializeObject<List<string>>(content);
-            }
-            catch (Exception)
-            {
-                Log.Error("Failed to Read From UserList File");
-            }
-        }
-
     }
 }

@@ -1,10 +1,9 @@
-﻿using Itac.OemAccess.TestingServer.BuisnessLogic;
-using Itac.OemAccess.TestingServer.Model;
+﻿using Itac.OemAccess.TestingServer.Model;
 using Microsoft.AspNet.SignalR;
 
 namespace Itac.OemAccess.TestingServer.ControlApi
 {
-    public class OemServerHub : Microsoft.AspNet.SignalR.Hub
+    public class OemServerHub : Hub
     {
         private static readonly IHubContext MyHubContext = GlobalHost.ConnectionManager.GetHubContext<OemServerHub>();
 
@@ -39,10 +38,17 @@ namespace Itac.OemAccess.TestingServer.ControlApi
             MyHubContext.Clients.Group(serialNumber).StateNotificationResonse(state);
             Log.Hub($"State Notification Submitted to Group :: {serialNumber}");
         }
+
         public static void CommandResponse(CommandResponse command, string serialNumber)
         {
             MyHubContext.Clients.Group(serialNumber).CommandResponse(command);
             Log.Hub($"Command Response Submitted to Grpuo :: {serialNumber}");
+        }
+
+        public static void NetworEvent(NetworkEvent evt, string serialNumber)
+        {
+            MyHubContext.Clients.Group(serialNumber).NetworkEvent(evt);
+            Log.Hub($"Network Event {evt.Type} Submitted to Group :: {serialNumber}");
         }
     }
 }

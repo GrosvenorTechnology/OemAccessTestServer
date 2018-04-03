@@ -19,6 +19,7 @@ namespace Itac.OemAccess.TestingServer
             ioc.RegisterType<PlatformRepository>(new ContainerControlledLifetimeManager());
             ioc.RegisterType<GlobalRepository>(new ContainerControlledLifetimeManager());
             ioc.RegisterType<AreaManager>(new ContainerControlledLifetimeManager());
+            ioc.RegisterType<NetworkNotificationManager>(new ContainerControlledLifetimeManager());
 
             WebApiBuilder.UnityContainer = ioc;
             var options = new StartOptions();
