@@ -38,6 +38,8 @@ namespace Itac.OemAccess.TestingServer.Model
         public QueueConfig ChangeQueue { get; set; }
         public PlatformRoutingTarget[] EventSubmission { get; set; } = new PlatformRoutingTarget[0];
         public PlatformRoutingTarget[] StateSubmission { get; set; } = new PlatformRoutingTarget[0];
+        public PlatformRoutingTarget[] CommandResponseSubmission { get; set; } = new PlatformRoutingTarget[0];
+
     }
 
     public sealed class PlatformConfiguration

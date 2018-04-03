@@ -43,10 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\BootConfiguration.cs" />
     <Compile Include="Model\DeviceEntry.cs" />
     <Compile Include="Model\HeartbeatResponse.cs" />
     <Compile Include="Model\ApplicationConfiguration.cs" />
     <Compile Include="Model\AreaMovement.cs" />
+    <Compile Include="Model\NetworkEvent.cs" />
     <Compile Include="Model\QueueEntry.cs" />
     <Compile Include="Model\Command.cs" />
     <Compile Include="Model\CommandResponse.cs" />
