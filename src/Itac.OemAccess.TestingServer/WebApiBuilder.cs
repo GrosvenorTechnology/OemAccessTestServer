@@ -4,9 +4,9 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Routing;
 using CacheCow.Server;
 using Itac.OemAccess.TestingServer.Authentication;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.WebApi;
 using Owin;
+using Unity;
+using Unity.AspNet.WebApi;
 
 namespace Itac.OemAccess.TestingServer
 {

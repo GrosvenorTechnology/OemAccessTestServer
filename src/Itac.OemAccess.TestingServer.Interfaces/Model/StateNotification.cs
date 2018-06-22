@@ -15,6 +15,7 @@ namespace Itac.OemAccess.TestingServer.Model
         public override string ToString()
         {
             return $@"
+        [LastChanged]  : {LastChanged:O}
         [Entity]       : {Entity}
         [StateName]    : {StateName}
         [StateType]    : {StateNotificationType}
@@ -29,6 +30,6 @@ namespace Itac.OemAccess.TestingServer.Model
         public string StateValue { get; set; }
         public StateNotificationType StateNotificationType { get; set; }
         public bool DiagState { get; set; }
-        public DateTime LastChanged { get; set; }
+        public DateTimeOffset LastChanged { get; set; }
     }
 }

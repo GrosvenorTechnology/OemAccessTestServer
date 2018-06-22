@@ -16,10 +16,11 @@ namespace Itac.OemAccess.TestingServer.Model
         public override string ToString()
         {
             return $@"
-        [Entity]    : {Entity}
-        [EventName] : {EventName}
-        [EventType] : {EventType}
-        [Content]   : {Print(Contents)}";
+        [SourceTime] : {TimeStamp:O}
+        [Entity]     : {Entity}
+        [EventName]  : {EventName}
+        [EventType]  : {EventType}
+        [Content]    : {Print(Contents)}";
         }
 
         public Guid MessageId { get; set; }
@@ -40,9 +41,16 @@ namespace Itac.OemAccess.TestingServer.Model
             if (source == null)
                 throw new ArgumentException("Parameter source can not be null.");
 
+            if (source.Count == 0)
+            {
+                return "";
+            }
+
             var str = new StringBuilder();
             foreach (var keyvaluepair in source)
-                str.Append(string.Format("{0}{1}{2}{3}", keyvaluepair.Key, keyValueSeparator, keyvaluepair.Value, sequenceSeparator));
+            {
+                str.Append($"{keyvaluepair.Key}{keyValueSeparator}{keyvaluepair.Value}{sequenceSeparator}");
+            }
             var retval = str.ToString();
             return retval.Substring(0, retval.Length - sequenceSeparator.Length); //remove last  seq_separator
         }

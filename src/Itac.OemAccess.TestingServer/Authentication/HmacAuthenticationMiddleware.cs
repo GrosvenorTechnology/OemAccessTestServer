@@ -10,7 +10,7 @@ using Itac.OemAccess.TestingServer.BuisnessLogic;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Infrastructure;
-using Microsoft.Practices.Unity;
+using Unity;
 
 namespace Itac.OemAccess.TestingServer.Authentication
 {

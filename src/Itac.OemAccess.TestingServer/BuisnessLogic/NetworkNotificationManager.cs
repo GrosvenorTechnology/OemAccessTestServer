@@ -8,9 +8,9 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
     {
         public void SubmitNetworkEvent(string uri, string serialNumber)
         {
-            if (uri.Contains("changes"))
+            if (uri.Contains("changes/messages"))
                 SubmitQueue(uri, NetworkEventTypes.ChangesRequest, serialNumber);
-            else if (uri.Contains("commands"))
+            else if (uri.Contains("commands/messages"))
                 SubmitQueue(uri, NetworkEventTypes.CommandRequest, serialNumber);
             else if (uri.Contains("states/messages"))
                 SubmitQueue(uri, NetworkEventTypes.StateNotificationRequest, serialNumber);

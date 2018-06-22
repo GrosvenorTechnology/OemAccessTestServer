@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Threading;
+using CommonServiceLocator;
 using Itac.OemAccess.TestingServer.BuisnessLogic;
 using Microsoft.Owin.Hosting;
 using Microsoft.Practices.Unity;
+using Unity;
+using Unity.Lifetime;
+using Unity.ServiceLocation;
 
 namespace Itac.OemAccess.TestingServer
 {
@@ -12,7 +16,7 @@ namespace Itac.OemAccess.TestingServer
         static void Main()
         {
             var ioc = new UnityContainer();
-            Microsoft.Practices.ServiceLocation.ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(ioc));
+            ServiceLocator.SetLocatorProvider(() => new UnityServiceLocator(ioc));
             ioc.RegisterType<Devices>(new ContainerControlledLifetimeManager());
 
             ioc.RegisterType<ApplicationRepository>(new ContainerControlledLifetimeManager());

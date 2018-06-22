@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Itac.OemAccess.TestingServer.Model
 {
     public class ApplicationConfiguration
     {
         public ApplicationController Controller { get; set; }
+        public Guid MessageId { get; set; }
     }
 
     public abstract class ApplicationEntity
@@ -16,13 +18,15 @@ namespace Itac.OemAccess.TestingServer.Model
 
     public sealed class ApplicationController : ApplicationEntity
     {
+        public string AreaMode { get; set; } = "local";
         public string TimeZone { get; set; } = "Etc/UTC";
         public ApplicationReader[] Readers { get; set; }
         public ApplicationPortal[] Portals { get; set; }
         public ApplicationArea[] Areas { get; set; }
         public ApplicationInput[] Inputs { get; set; }
         public ApplicationOutput[] Outputs { get; set; }
-        public ApplicationReaderCommands[] ReaderCommands { get; set; }
+        public ApplicationTokenFormat[] TokenFormats { get; set; }
+        public ApplicationTimeTable[] TimeTables { get; set; }
     }
 
     public abstract class ApplicationCommandModeEntity : ApplicationEntity
@@ -70,7 +74,13 @@ namespace Itac.OemAccess.TestingServer.Model
             public string[] Areas { get; set; }
         }
 
-        public bool UsingExitSwitch { get; set; } = false;
+        public class ModeChangingEntity
+        {
+            public string Id { get; set; }
+            public int Priority { get; set; }
+        }
+
+        public bool RequestExitEnabled { get; set; } = false;
 
         public string LockType { get; set; } = "energiseToLock";
         public bool UseAuxOutputForLock { get; set; } = false;
@@ -79,7 +89,7 @@ namespace Itac.OemAccess.TestingServer.Model
 
         public string SensorType { get; set; } = "disabled";
         public string SwitchType { get; set; } = "unsupervised";
-        public string BreakGlassType { get; set; } = "disabled";
+        public string BreakGlass { get; set; } = "disabled";
 
         public TimeSpan NormalUnlockPeriod { get; set; } = TimeSpan.FromSeconds(5);
         public TimeSpan ExtendedUnlockPeriod { get; set; } = TimeSpan.FromSeconds(10);
@@ -93,13 +103,17 @@ namespace Itac.OemAccess.TestingServer.Model
         public TimeSpan OpenTooLongSouderPeriod { get; set; } = TimeSpan.FromSeconds(10);
 
         public int LockCurrentLimit { get; set; } = 4000;
-        public int LockCurrentMinimum { get; set; } = 20;
-        public int LockCurrentMaximum { get; set; } = 3000;
+        public int LockWarningCurrentMinimum { get; set; } = 20;
+        public int LockWarningCurrentMaximum { get; set; } = 3000;
 
         public PortalDirection Entry { get; set; }
         public PortalDirection Exit { get; set; }
 
         public string PortalInterlock { get; set; }
+
+        public ModeChangingEntity UnlockOnTimeTable { get; set; }
+        public ModeChangingEntity UnlockOnSystemMode { get; set; }
+        public ModeChangingEntity NormalOnSystemMode { get; set; }
 
         public string[] SingleUnlockPermissions { get; set; }
         public string[] ChangeModePermissions { get; set; }
@@ -115,7 +129,7 @@ namespace Itac.OemAccess.TestingServer.Model
     {
         public string OfflineMode { get; set; } = "unenforced";
         public bool EnforceOccupancyLimits { get; set; } = true;
-        public int MaximumOccupancy { get; set; } = 0;
+        public int MaximumOccupancy { get; set; } = 1_000_000;
         public int MinimumOccupancy { get; set; } = 0;
 
         public string[] ChangeModePermissions { get; set; }
@@ -162,19 +176,30 @@ namespace Itac.OemAccess.TestingServer.Model
         }
     }
 
-    public sealed class ApplicationReaderCommands : ApplicationHardwareEntity
+    public sealed class ApplicationTokenFormat : ApplicationHardwareEntity
     {
-        public string ActionChar { get; set; } = "#";
-        public bool Anonymous { get; set; }
-        public string[] Readers { get; set; }
-        public string[] Commands { get; set; }
+        public string Definition { get; set; }
 
-        public string[] ChangeModePermissions { get; set; }
-
-        public ApplicationReaderCommands()
+        public ApplicationTokenFormat()
         {
-            Type = "AccessControl.ReaderCommand";
+            Type = "Hardware.TokenFormatType";
             OperationalMode = "normal";
+        }
+    }
+
+    public sealed class ApplicationTimeTable : ApplicationHardwareEntity
+    {
+        public class TimeTableSpan
+        {
+            public TimeSpan Start { get; set; }
+            public TimeSpan End { get; set; }
+        }
+
+        public Dictionary<string, List<TimeTableEntity.TimeTableSpan>> Transitions { get; set; }
+
+        public ApplicationTimeTable()
+        {
+            Type = "Common.TimeTable";
         }
     }
 }
