@@ -22,6 +22,17 @@ namespace Itac.OemAccess.TestingServer.OemAccessApi
             _devices = devices;
         }
 
+        [Route("bootconfiguration")]
+        [HttpGet]
+        public HttpResponseMessage GetBootConfiguration(string serialNumber)
+        {
+            Log.Trace($"Get Boot Configuration {serialNumber}");
+            var data = _devices[serialNumber].LoadBootConfig();
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(data, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.MediaType);
+            return response;
+        }
+
         [Route("platformconfiguration")]
         [HttpGet]
         public HttpResponseMessage GetPlatformConfiguration(string serialNumber)
