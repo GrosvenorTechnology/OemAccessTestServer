@@ -4,7 +4,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Web.Http;
 using CacheCow.Server;
-using Itac.OemAccess.TestingServer.BuisnessLogic;
+using Itac.OemAccess.TestingServer.BusinessLogic;
 using Itac.OemAccess.TestingServer.Model;
 using Newtonsoft.Json.Linq;
 
@@ -26,6 +26,29 @@ namespace Itac.OemAccess.TestingServer.ControlApi
         {
             var relatedResource = new HttpRequestMessage(HttpMethod.Get, Url.Content(url));
             _cachingHandler.InvalidateResource(relatedResource);
+        }
+
+        [Route("boot")]
+        [HttpGet]
+        public HttpResponseMessage GetBootConfiguration(string serialNumber)
+        {
+            Log.ConfigUpdate($"Get Boot Config : {serialNumber}");
+            var data = _devices[serialNumber].LoadBootConfig();
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(data, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.MediaType);
+            return response;
+        }
+
+        [Route("boot")]
+        [HttpPost]
+        public HttpResponseMessage PostBootConfiguration(string serialNumber)
+        {
+            Log.ConfigUpdate($"Post Boot Config : {serialNumber}");
+            var data = Request.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+            _devices[serialNumber].SaveBootConfig(data);
+            ResetCache("boot");
+            ResetCache($"/grosvenor-oem/device/{serialNumber}/bootconfiguration");
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
         [Route("platform")]

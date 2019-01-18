@@ -7,7 +7,7 @@ using System.Text;
 using Itac.OemAccess.TestingServer.Model;
 using Newtonsoft.Json;
 
-namespace Itac.OemAccess.TestingServer.BuisnessLogic
+namespace Itac.OemAccess.TestingServer.BusinessLogic
 {
     public class AreaManager
     {

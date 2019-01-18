@@ -2,7 +2,7 @@
 using Itac.OemAccess.TestingServer.ControlApi;
 using Itac.OemAccess.TestingServer.Model;
 
-namespace Itac.OemAccess.TestingServer.BuisnessLogic
+namespace Itac.OemAccess.TestingServer.BusinessLogic
 {
     public class NetworkNotificationManager
     {

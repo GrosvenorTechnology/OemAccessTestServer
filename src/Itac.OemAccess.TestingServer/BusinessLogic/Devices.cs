@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
-namespace Itac.OemAccess.TestingServer.BuisnessLogic
+namespace Itac.OemAccess.TestingServer.BusinessLogic
 {
 
     public class Devices
@@ -21,6 +22,9 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
                 var dev = _deviceFactory();
                 dev.SerialNumber = serialNumber;
                 dev.SharedKey = sharedKey;
+                dev.SaveBootConfig(null);
+                dev.SavePlatformConfig(null);
+                dev.SaveAppConfig(null);
                 _devices.Add(serialNumber, dev);
             }
             else
@@ -30,5 +34,10 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
         }
 
         public Device this[string serialNumber] => _devices[serialNumber];
+
+        public List<Device> GetAll()
+        {
+            return _devices.Values.ToList();
+        }
     }
 }

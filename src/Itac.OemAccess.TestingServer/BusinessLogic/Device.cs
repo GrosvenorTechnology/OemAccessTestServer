@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using GT.OemAccess.Configuration;
 using Itac.OemAccess.TestingServer.Model;
 using Newtonsoft.Json.Linq;
 
-namespace Itac.OemAccess.TestingServer.BuisnessLogic
+namespace Itac.OemAccess.TestingServer.BusinessLogic
 {
     public class Device
     {
         private bool _appConfigFlag;
         private bool _platformConfigFlag;
+        private bool _bootConfigFlag;
         public string SerialNumber { get; set; }
         public string SharedKey { get; set; }
 
+        private readonly BootRepository _bootRepository;
         private readonly PlatformRepository _platformRepository;
         private readonly ApplicationRepository _applicationRepository;
 
@@ -18,8 +21,9 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
         public OemServerQueue<Command> CommandRequestQueue { get; } = new OemServerQueue<Command>();
         public OemServerQueue<JObject> ChangesQueue { get; } = new OemServerQueue<JObject>();
 
-        public Device(PlatformRepository platformRepo, ApplicationRepository appRepo)
+        public Device(BootRepository bootRepo, PlatformRepository platformRepo, ApplicationRepository appRepo)
         {
+            _bootRepository = bootRepo;
             _platformRepository = platformRepo;
             _applicationRepository = appRepo;
         }
@@ -64,8 +68,19 @@ namespace Itac.OemAccess.TestingServer.BuisnessLogic
         {
             _platformRepository.Save(SerialNumber, data);
             _platformConfigFlag = true;
-
         }
 
+        public string LoadBootConfig()
+        {
+            _bootConfigFlag = false;
+            return _bootRepository.Load(SerialNumber);
+        }
+
+        public void SaveBootConfig(string data)
+        {
+            _bootRepository.Save(SerialNumber, data);
+            _bootConfigFlag = true;
+
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Itac.OemAccess.TestingServer.BuisnessLogic;
+using Itac.OemAccess.TestingServer.BusinessLogic;
 using Itac.OemAccess.TestingServer.Model;
 
 namespace Itac.OemAccess.TestingServer.OemAccessApi

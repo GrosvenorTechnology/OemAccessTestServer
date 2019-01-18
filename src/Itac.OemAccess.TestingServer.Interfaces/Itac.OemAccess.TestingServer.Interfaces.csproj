@@ -40,10 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\BootConfiguration.cs" />
+    <Compile Include="Model\ControllerContainer.cs" />
     <Compile Include="Model\DeviceEntry.cs" />
     <Compile Include="Model\HeartbeatResponse.cs" />
-    <Compile Include="Model\ApplicationConfiguration.cs" />
     <Compile Include="Model\AreaMovement.cs" />
     <Compile Include="Model\NetworkEvent.cs" />
     <Compile Include="Model\QueueEntry.cs" />
@@ -51,14 +50,16 @@
     <Compile Include="Model\CommandResponse.cs" />
     <Compile Include="Model\EntityMessages.cs" />
     <Compile Include="Model\Event.cs" />
-    <Compile Include="Model\PlatformConfiguration.cs" />
     <Compile Include="Model\StateNotification.cs" />
     <Compile Include="Model\StateRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="GT.OemAccess.Configuration">
+      <Version>3.2.22372</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>11.0.2</Version>
+      <Version>12.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

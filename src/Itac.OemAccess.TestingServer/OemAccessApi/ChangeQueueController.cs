@@ -6,7 +6,7 @@ using System.Net.Http.Formatting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Http;
-using Itac.OemAccess.TestingServer.BuisnessLogic;
+using Itac.OemAccess.TestingServer.BusinessLogic;
 using Itac.OemAccess.TestingServer.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

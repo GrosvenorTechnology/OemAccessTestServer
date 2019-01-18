@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Itac.OemAccess.TestingServer.BuisnessLogic
+namespace Itac.OemAccess.TestingServer.BusinessLogic
 {
-    public class PlatformRepository
+    public class BootRepository
     {
         private readonly Dictionary<string, string> _store = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
