@@ -50,9 +50,16 @@ namespace Itac.OemAccess.TestingServer.OemAccessApi
         {
             Log.Trace($"Get Application Configuration {serialNumber}");
             var data = _devices[serialNumber].LoadAppConfig();
-            var response = Request.CreateResponse(HttpStatusCode.OK);
-            response.Content = new StringContent(data, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.MediaType);
-            return response;
+            if (data != null)
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK);
+                response.Content = new StringContent(data, Encoding.UTF8, JsonMediaTypeFormatter.DefaultMediaType.MediaType);
+                return response;
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
 
         [Route("{messageType}")]
