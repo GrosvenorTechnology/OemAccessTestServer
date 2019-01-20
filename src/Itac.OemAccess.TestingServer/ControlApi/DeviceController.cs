@@ -131,5 +131,12 @@ namespace Itac.OemAccess.TestingServer.ControlApi
             return Request.CreateResponse(HttpStatusCode.NoContent);
         }
 
+        [Route("hardwarereport")]
+        public HttpResponseMessage PostHardwareReport(string serialNumber, [FromBody] JObject body)
+        {
+            Log.Trace($"Hardware Report for :: {serialNumber}");
+            return Request.CreateResponse(HttpStatusCode.NoContent);
+        }
+
     }
 }
